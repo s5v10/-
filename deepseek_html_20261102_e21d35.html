@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Moviez™ || 🍿 موفيز تايم</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Tajawal:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0d1117;--bg2:#161b22;--card:#21262d;--accent:#00b8a9;--accent-hover:#00d1c1;--accent2:#ffd700;--text:#f0f6fc;--muted:#8b949e;--border:#30363d;--color-1:#04222B;--color-2:#0A3D4A;--color-3:#10606F;--color-4:#1D8B94;--color-5:#4FB8B4;--color-6:#98D8D0;--color-7:#E2F4F0;--accent-green:#2e7d32;--font-body:'Cairo',sans-serif;--font-title:'Tajawal',sans-serif;--heart-color:#ff4757;--bookmark-color:#ff9f43}
+*{margin:0;padding:0;box-sizing:border-box}a{color:inherit;text-decoration:none}img{max-width:100%;display:block}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+
+/* ===== التنسيقات العامة ===== */
+#mainView header, #likesView header {position:sticky;top:0;z-index:100;background:rgba(13,17,23,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:12px 0}
+#mainView .header-inner, #likesView .header-inner {max-width:1400px;margin:0 auto;padding:0 20px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.header-right-side {display:flex;align-items:center;gap:15px;}
+
+/* الشعار */
+.brand{display:flex;align-items:center;gap:12px}
+.brand-logo{width:45px;height:45px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;background:linear-gradient(135deg,var(--accent),#00706a);box-shadow:0 4px 15px rgba(0,184,169,0.3);transition:transform .3s ease;}
+.brand:hover .brand-logo{transform:scale(1.05) rotate(-5deg);}
+.brand-text{font-size:22px;font-weight:800;white-space:nowrap;display:flex;align-items:center;gap:8px;font-family:var(--font-title);letter-spacing:0.5px;}
+.brand-text .sep{color:var(--accent);font-weight:300;font-size:18px;}
+.header-tools{display:flex;align-items:center;gap:15px}
+.search-wrap{position:relative;width:250px}
+.search-wrap input{width:100%;padding:10px 40px 10px 16px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:20px;color:var(--text);font-size:13px;font-family:inherit;transition:all .3s}
+.search-wrap input:focus{outline:none;border-color:var(--accent);background:rgba(0,0,0,0.3);box-shadow:0 0 0 3px rgba(0,184,169,0.1)}
+.search-wrap .search-icon{position:absolute;right:14px;top:50%;transform:translateY(-50%);width:16px;height:16px;fill:var(--muted);pointer-events:none;transition:fill .3s}
+.search-wrap input:focus + .search-icon{fill:var(--accent)}
+
+/* زر التفضيلات في الهيدر */
+.btn-header-likes{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:12px;background:rgba(255,71,87,.1);border:1px solid rgba(255,71,87,.35);color:var(--heart-color);font-family:inherit;font-weight:800;font-size:13px;cursor:pointer;transition:.3s;white-space:nowrap}
+.btn-header-likes svg{width:18px;height:18px;fill:var(--heart-color)}
+.btn-header-likes:hover{background:rgba(255,71,87,.2);transform:translateY(-2px);box-shadow:0 6px 18px rgba(255,71,87,.25)}
+@media(max-width:768px){.btn-header-likes{display:none}}
+
+/* ===== تنسيقات الصفحة الرئيسية ===== */
+#mainView .hero{max-width:1400px;margin:20px auto;padding:0 20px}
+#mainView .hero-inner{position:relative;border-radius:24px;overflow:hidden;padding:60px 50px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;min-height:380px;background:linear-gradient(to left,rgba(13,17,23,.15) 0%,rgba(13,17,23,.95) 78%),url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat;border:1px solid var(--border)}
+#mainView .hero-badge{background:rgba(0,184,169,.1);border:1px solid rgba(0,184,169,.3);color:var(--accent);padding:8px 18px;border-radius:30px;font-size:14px;font-weight:700;margin-bottom:20px;display:inline-flex;align-items:center;gap:8px;backdrop-filter:blur(10px)}
+#mainView .hero h1{font-family:var(--font-title);font-size:46px;font-weight:800;line-height:1.2;margin-bottom:15px}
+#mainView .text-gradient{background:linear-gradient(90deg,var(--accent2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent}
+#mainView .hero p{color:#c9d1d9;font-size:16px;max-width:600px;margin-bottom:30px;line-height:1.8}
+#mainView .hero-buttons{display:flex;gap:15px;flex-wrap:wrap}
+#mainView .btn-hero{padding:14px 28px;border-radius:14px;font-size:15px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:all .3s;font-family:inherit;border:none}
+#mainView .btn-hero-primary{background:linear-gradient(135deg,var(--accent),#008f85);color:#fff;box-shadow:0 8px 25px rgba(0,184,169,0.3)}
+#mainView .btn-hero-primary:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,184,169,0.5)}
+#mainView .btn-hero-secondary{background:rgba(255,255,255,.05);color:var(--text);border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(10px)}
+#mainView .btn-hero-secondary:hover{background:rgba(255,255,255,.1);border-color:var(--accent);transform:translateY(-3px)}
+
+#mainView .categories-bar, #likesView .categories-bar{max-width:1400px;margin:30px auto 20px;padding:0 20px;display:flex;gap:10px;overflow-x:auto;scrollbar-width:none}
+#mainView .categories-bar::-webkit-scrollbar, #likesView .categories-bar::-webkit-scrollbar{display:none}
+.cat-pill{padding:10px 22px;background:var(--bg2);border:1px solid var(--border);border-radius:20px;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;white-space:nowrap;transition:all .3s;font-family:inherit}
+.cat-pill:hover{color:var(--text);border-color:var(--accent);background:rgba(0,184,169,0.05)}
+.cat-pill.active{background:linear-gradient(135deg,var(--accent),#008f85);color:#fff;border-color:transparent;box-shadow:0 4px 15px rgba(0,184,169,0.3)}
+
+#mainView main, #likesView main{max-width:1400px;margin:0 auto;padding:0 20px 60px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:20px}
+.movie-card{background:var(--card);border-radius:16px;overflow:hidden;cursor:pointer;transition:transform .4s cubic-bezier(0.175, 0.885, 0.32, 1.275),box-shadow .4s,border-color .4s;border:1px solid var(--border);position:relative}
+.movie-card:hover{transform:translateY(-8px);box-shadow:0 15px 35px rgba(0,0,0,.6);border-color:var(--accent)}
+.card-poster{position:relative;aspect-ratio:2/3;overflow:hidden;background:#222}
+.card-poster img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.movie-card:hover .card-poster img{transform:scale(1.08)}
+.badge{position:absolute;top:12px;right:12px;background:rgba(0,184,169,.95);color:#fff;padding:4px 10px;font-size:11px;font-weight:800;border-radius:8px;backdrop-filter:blur(4px);box-shadow:0 4px 10px rgba(0,0,0,0.3)}
+.rating{position:absolute;bottom:12px;left:12px;background:rgba(0,0,0,.85);color:var(--accent2);padding:4px 10px;font-size:12px;font-weight:800;border-radius:8px;backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,0.1)}
+.card-info{padding:14px}
+.card-info h3{font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:8px;color:var(--text)}
+.card-meta{display:flex;gap:8px;font-size:12px;color:var(--muted);flex-wrap:wrap}
+.row-section{margin-bottom:45px}
+.row-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;gap:10px}
+.row-title{font-family:var(--font-title);font-size:24px;font-weight:800;display:flex;align-items:center;gap:12px;color:var(--text)}
+.row-title::before{content:'';display:inline-block;width:5px;height:26px;background:linear-gradient(180deg,var(--accent),var(--accent2));border-radius:4px}
+.row-viewall{background:transparent;border:1px solid var(--border);color:var(--accent);padding:8px 18px;border-radius:20px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .3s;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.row-viewall:hover{background:var(--accent);color:#fff;border-color:var(--accent);transform:translateY(-2px);box-shadow:0 4px 15px rgba(0,184,169,0.3)}
+.h-scroll{display:flex;gap:20px;overflow-x:auto;padding:6px 4px 14px;scroll-snap-type:x mandatory;scrollbar-width:thin}
+.h-scroll::-webkit-scrollbar{height:6px}
+.h-scroll::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+.h-scroll::-webkit-scrollbar-thumb:hover{background:var(--accent)}
+.h-scroll .movie-card{flex:0 0 190px;scroll-snap-align:start}
+
+/* واجهة فارغة */
+.no-results{text-align:center;padding:80px 20px;color:var(--muted);display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.no-results svg{width:100px;height:100px;margin-bottom:20px;fill:none;stroke:var(--border);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;opacity:0.8;}
+.no-results h3{font-family:var(--font-title);font-size:24px;color:var(--text);margin-bottom:10px}
+.no-results p{font-size:15px;max-width:400px;margin-bottom:20px}
+.no-results button{padding:12px 28px;background:linear-gradient(135deg,var(--accent),#008f85);color:#fff;border:none;border-radius:12px;font-weight:700;font-family:inherit;font-size:15px;cursor:pointer;transition:all .3s;box-shadow:0 8px 20px rgba(0,184,169,0.3)}
+.no-results button:hover{transform:translateY(-3px);box-shadow:0 12px 25px rgba(0,184,169,0.5)}
+
+.site-footer{background:var(--bg2);border-top:1px solid var(--border);padding:30px 20px;text-align:center;margin-top:40px}
+.site-footer p{color:var(--muted);font-size:14px;margin-bottom:8px}
+.site-footer strong{color:var(--accent);font-weight:800}
+
+/* ===== واجهة التفضيلات ===== */
+#likesView { min-height: 100vh; display: flex; flex-direction: column; background: #0b0f19; }
+#likesView .header-inner { justify-content: flex-start; gap: 20px; max-width: 1000px; margin: 0 auto; }
+.back-main-btn { display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--text); padding: 10px 20px; border-radius: 12px; cursor: pointer; font-family: inherit; font-weight: 700; transition: 0.3s; }
+.back-main-btn:hover { background: rgba(255,255,255,0.1); border-color: var(--accent); transform: translateX(3px);}
+.back-main-btn svg { width: 16px; height: 16px; stroke: currentColor; stroke-width: 2.5; fill: none; }
+
+.likes-content-wrapper { max-width: 1000px; margin: 0 auto; width: 100%; padding: 20px; }
+.likes-header-title { font-family: var(--font-title); font-size: 32px; font-weight: 800; color: var(--text); display: flex; align-items: center; gap: 15px; margin: 20px 0; }
+.likes-header-title svg { width: 36px; height: 36px; fill: var(--heart-color); filter: drop-shadow(0 4px 10px rgba(255, 71, 87, 0.4)); }
+
+.likes-search { position: relative; margin-bottom: 20px; }
+.likes-search input { width: 100%; padding: 14px 45px 14px 20px; background: #161b22; border: 1px solid #30363d; border-radius: 12px; color: var(--text); font-size: 15px; font-family: inherit; transition: 0.3s; }
+.likes-search input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0,184,169,0.1); }
+.likes-search svg { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; stroke: var(--muted); fill: none; stroke-width: 2; }
+
+.likes-filters { display: flex; gap: 10px; overflow-x: auto; margin-bottom: 30px; padding-bottom: 5px; scrollbar-width: none; }
+.likes-filters::-webkit-scrollbar { display: none; }
+.likes-filters .cat-pill { background: #161b22; border: 1px solid #30363d; color: var(--muted); padding: 8px 20px; border-radius: 20px; font-size: 13px; font-weight: 700; cursor: pointer; transition: 0.3s; white-space: nowrap; }
+.likes-filters .cat-pill:hover { background: #21262d; color: #fff; }
+.likes-filters .cat-pill.active { background: var(--accent); border-color: var(--accent); color: #fff; box-shadow: 0 4px 15px rgba(0,184,169,0.3); }
+
+.likes-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 20px; }
+.likes-card { position: relative; border-radius: 16px; overflow: hidden; background: #161b22; border: 1px solid #30363d; transition: 0.3s; cursor: pointer; }
+.likes-card:hover { transform: translateY(-5px); border-color: var(--accent); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+.likes-card .card-poster { aspect-ratio: 2/3; position: relative; }
+.likes-card .card-poster img { width: 100%; height: 100%; object-fit: cover; }
+.likes-card .badge { position: absolute; top: 10px; left: 10px; background: rgba(0,184,169,0.9); color: #fff; padding: 3px 8px; border-radius: 6px; font-size: 10px; font-weight: 800; }
+.likes-card .rating { position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.8); color: #ffd700; padding: 3px 8px; border-radius: 6px; font-size: 11px; font-weight: 800; }
+
+.card-actions { position: absolute; top: 40px; right: 10px; display: flex; flex-direction: column; gap: 8px; }
+.action-icon { width: 32px; height: 32px; border-radius: 8px; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); display: flex; align-items: center; justify-content: center; border: none; cursor: pointer; transition: 0.2s; }
+.action-icon svg { width: 18px; height: 18px; }
+.action-icon:hover { background: rgba(0,0,0,0.9); transform: scale(1.1); }
+.icon-heart { color: var(--heart-color); fill: var(--heart-color); }
+.icon-heart svg { fill: currentColor; stroke: none; }
+
+.likes-card .card-info { padding: 12px; text-align: center; }
+.likes-card .card-info h3 { font-size: 14px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0; }
+
+@media (max-width:768px){
+  .likes-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .likes-header-title { font-size: 24px; }
+  .likes-header-title svg { width: 28px; height: 28px; }
+}
+
+/* ===== صفحة التفاصيل ===== */
+.detail-view{background-color:var(--color-1);font-family:var(--font-body);color:var(--color-7);display:flex;justify-content:center;min-height:100vh;width:100%;line-height:1.6}
+.detail-view .app-container{width:100%;max-width:480px;background-color:var(--color-1);position:relative;overflow-x:hidden;box-shadow:0 0 40px rgba(0,0,0,.9)}
+@media (min-width:481px){.detail-view .app-container{border-radius:28px;margin:20px 0;border:1px solid var(--color-3)}}
+.detail-view .hero-section{position:relative;margin:16px;height:380px;border-radius:24px;overflow:hidden;background-color:var(--color-2)}
+.detail-view .hero-image{width:100%;height:100%;object-fit:cover;mask-image:linear-gradient(to top,transparent 0%,black 40%);-webkit-mask-image:linear-gradient(to top,transparent 0%,black 40%)}
+.detail-view .hero-gradient{position:absolute;bottom:0;left:0;right:0;height:180px;background:linear-gradient(to top,var(--color-1) 0%,transparent 100%);pointer-events:none}
+.detail-view .hero-title{position:absolute;bottom:20px;right:24px;z-index:2}
+.detail-view .hero-title h1{font-family:var(--font-title);font-size:28px;font-weight:800;letter-spacing:.5px;color:var(--color-7);text-shadow:0 4px 15px rgba(4,34,43,.9)}
+.detail-view .back-btn{position:absolute;top:20px;right:20px;background:rgba(4,34,43,.6);backdrop-filter:blur(15px);border-radius:50%;width:46px;height:46px;display:flex;align-items:center;justify-content:center;color:var(--color-7);border:1px solid rgba(255,255,255,.15);z-index:3;transition:.3s;cursor:pointer}
+.detail-view .back-btn:hover{background:var(--color-3);transform:scale(1.05)}
+.detail-view .rating-badge{position:absolute;bottom:15px;left:20px;background:var(--accent-green);color:#fff;padding:8px 14px;border-radius:10px;display:flex;align-items:center;gap:6px;font-weight:800;font-size:15px;z-index:2;box-shadow:0 6px 20px rgba(46,125,50,.5)}
+.detail-view .content-section{padding:0 24px 30px}
+.detail-view .meta-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-start;margin-bottom:20px}
+.detail-view .meta-pill{background:rgba(10,61,74,0.6);border:1px solid var(--color-4);padding:8px 16px;border-radius:30px;font-size:13px;color:var(--color-6);display:flex;align-items:center;gap:8px;font-weight:700;backdrop-filter:blur(10px)}
+.detail-view .meta-pill svg{width:16px;height:16px;fill:var(--color-5)}
+.detail-view .status-row{display:flex;justify-content:flex-start;margin-bottom:25px}
+.detail-view .status-pill{background:rgba(16,96,111,0.8);border:1px solid var(--color-5);padding:8px 16px;border-radius:30px;font-size:13px;color:var(--color-7);display:flex;align-items:center;gap:8px;font-weight:800;backdrop-filter:blur(10px)}
+.detail-view .action-buttons{display:flex;gap:15px;margin-bottom:30px}
+
+.detail-view .btn-modern{flex:1;display:flex;justify-content:center;align-items:center;gap:10px;padding:16px;border-radius:16px;font-family:var(--font-body);font-weight:800;font-size:15px;cursor:pointer;transition:all .3s ease;border:1px solid transparent; outline: none;}
+
+.detail-view .btn-telegram{background:linear-gradient(135deg,var(--color-5),var(--color-4));color:var(--color-1);font-weight:800}
+.detail-view .btn-telegram:hover{transform:translateY(-3px);box-shadow:0 8px 25px rgba(79,184,180,0.4)}
+.detail-view .genres-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-start;margin-bottom:30px}
+.detail-view .genre-pill{background:transparent;padding:6px 18px;border-radius:30px;font-size:13px;color:var(--color-6);border:1px solid var(--color-4);font-weight:700;transition:.3s}
+.detail-view .genre-pill:hover{background:var(--color-2);color:var(--color-7);border-color:var(--color-5)}
+.detail-view .story-section{text-align:right;margin-bottom:30px}
+.detail-view .story-section h2{font-family:var(--font-title);font-size:22px;font-weight:800;color:var(--color-7);margin-bottom:12px}
+.detail-view .story-text{font-size:15px;color:var(--color-6);line-height:1.8;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;transition:all .3s ease}
+.detail-view .story-text.expanded{display:block;-webkit-line-clamp:unset}
+.detail-view .read-more{color:var(--color-5);font-size:14px;font-weight:800;margin-top:10px;display:inline-block;cursor:pointer;transition:.3s}
+.detail-view .read-more:hover{color:var(--color-6)}
+.detail-view .star-rating-box{background:rgba(10,61,74,0.4);padding:24px;border-radius:20px;margin-bottom:30px;text-align:center;border:1px solid rgba(29,139,148,0.3);backdrop-filter:blur(10px)}
+.detail-view .star-rating-box h3{font-family:var(--font-title);font-size:20px;color:var(--color-7);margin-bottom:15px;font-weight:800}
+.detail-view .stars{display:flex;justify-content:center;gap:12px;direction:ltr;margin-bottom:15px}
+.detail-view .stars i{font-style:normal;font-size:32px;color:var(--color-3);cursor:pointer;transition:.2s}
+.detail-view .stars i.active{color:#FFD700;text-shadow:0 0 15px rgba(255,215,0,0.4)}
+.detail-view .stars i:hover{color:#FFD700;transform:scale(1.2)}
+.detail-view .rating-note{font-size:13px;color:var(--color-6);margin:0;line-height:1.6;background:rgba(16,96,111,0.6);padding:10px 16px;border-radius:10px;display:inline-block;font-weight:600}
+.detail-view .characters-section{text-align:right;margin-bottom:25px}
+.detail-view .characters-section h2{font-family:var(--font-title);font-size:22px;font-weight:800;color:var(--color-7);margin-bottom:20px}
+.detail-view .characters-list{display:flex;gap:18px;overflow-x:auto;padding-bottom:10px;direction:rtl;scrollbar-width:none;}
+.detail-view .characters-list::-webkit-scrollbar{display:none}
+.detail-view .character-box{display:flex;flex-direction:column;align-items:center;gap:10px;flex-shrink:0;width:80px}
+.detail-view .character-avatar{width:75px;height:75px;border-radius:50%;object-fit:cover;border:3px solid var(--color-4);cursor:pointer;transition:.3s;background:var(--color-3);box-shadow:0 4px 15px rgba(0,0,0,0.3)}
+.detail-view .character-avatar:hover{border-color:var(--color-5);transform:scale(1.08)}
+.detail-view .character-box span{font-size:12px;color:var(--color-6);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:100%;font-weight:700}
+.detail-view .custom-footer{background:var(--color-2);padding:35px 20px;text-align:center;border-top:1px solid var(--color-3);border-radius:28px 28px 0 0}
+.detail-view .custom-footer h3{font-family:var(--font-title);color:var(--color-7);font-size:22px;margin-bottom:5px;font-weight:800}
+.detail-view .custom-footer p{color:var(--color-6);font-size:14px;margin-bottom:20px}
+.detail-view .whatsapp-btn{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,var(--color-3),var(--color-4));color:var(--color-7);padding:14px 28px;border-radius:14px;font-weight:800;font-size:16px;transition:.3s;border:1px solid var(--color-5);box-shadow:0 4px 15px rgba(16,96,111,0.4)}
+.detail-view .whatsapp-btn:hover{transform:translateY(-3px);box-shadow:0 8px 25px rgba(16,96,111,0.6)}
+@media (max-width:480px){.detail-view .app-container{border-radius:0;margin:0;border:none}}
+
+.toast{position:fixed;bottom:30px;left:50%;transform:translate(-50%,30px);background:rgba(0,184,169,0.95);backdrop-filter:blur(10px);color:#fff;padding:14px 28px;border-radius:30px;font-weight:800;font-size:15px;opacity:0;pointer-events:none;transition:.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);z-index:300;box-shadow:0 15px 35px rgba(0,184,169,0.4);border:1px solid rgba(255,255,255,0.2)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+
+<!-- ============ الواجهة الرئيسية ============ -->
+<div id="mainView">
+  <header>
+    <div class="header-inner">
+      <div class="header-right-side">
+        <!-- تم حذف قائمة الخيارات من هنا -->
+        <a href="#" class="brand" onclick="resetFilters();return false;">
+          <div class="brand-logo">🍿</div>
+          <div class="brand-text">Moviez™ <span class="sep">||</span> موفيز تايم</div>
+        </a>
+      </div>
+      
+      <div class="header-tools">
+        <div class="search-wrap">
+          <input type="text" id="searchInput" placeholder="ابحث عن فيلم أو مسلسل..." aria-label="بحث">
+          <svg class="search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </div>
+        <button class="btn-header-likes" onclick="showLikesView()">
+          <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+          التفضيلات
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-badge">✨ تجربة سينمائية لا مثيل لها</div>
+      <h1><span class="text-gradient">وفرنا</span> عليك التعب <br>وجمعنا كلشي في مكان واحد</h1>
+      <p>كل قنوات المسلسلات والأفلام على تيليجرام… في مكان واحد. اكتشف، اضغط، وتابع بجودة عالية.</p>
+      <div class="hero-buttons">
+        <button class="btn-hero btn-hero-primary" id="startWatch">▶ ابدأ المشاهدة</button>
+        <button class="btn-hero btn-hero-secondary" id="addList">القناة الرسمية على التلجرام</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="categories-bar" id="categoriesBar">
+    <button class="cat-pill active" data-cat="الكل">الكل</button>
+    <button class="cat-pill" data-cat="مسلسلات تركيه">مسلسلات تركيه</button>
+    <button class="cat-pill" data-cat="مسلسلات اجنبيه">مسلسلات اجنبيه</button>
+    <button class="cat-pill" data-cat="مسلسلات كوريه">مسلسلات كوريه</button>
+    <button class="cat-pill" data-cat="مسلسلات مصريه">مسلسلات مصريه</button>
+    <button class="cat-pill" data-cat="مسلسلات انمي">مسلسلات انمي</button>
+    <button class="cat-pill" data-cat="سلاسل افلام">سلاسل افلام</button>
+    <button class="cat-pill" data-cat="افلام اجنبيه">افلام اجنبيه</button>
+    <button class="cat-pill" data-cat="افلام انميشن">افلام انميشن</button>
+  </div>
+
+  <main>
+    <div id="sectionsView"></div>
+    <div class="grid" id="moviesGrid" style="display:none;"></div>
+    <div class="no-results" id="noResults" style="display:none;">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <h3 id="noResTitle">لا توجد نتائج</h3>
+      <p id="noResDesc">جرّب كلمة بحث مختلفة أو اختر تصنيفاً آخر</p>
+      <button onclick="resetFilters()">إعادة ضبط الفلاتر</button>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 Moviez™. جميع الحقوق محفوظة.</p>
+    <p>تصميم وتطوير: <strong>م / احمد الداوودي</strong></p>
+  </footer>
+</div>
+
+<!-- ============ صفحة التفضيلات ============ -->
+<div id="likesView" style="display:none;">
+  <header>
+    <div class="header-inner">
+      <button class="back-main-btn" onclick="backFromLikes()">
+        <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        رجوع للرئيسية
+      </button>
+    </div>
+  </header>
+  
+  <div class="likes-content-wrapper">
+    <h1 class="likes-header-title">
+      <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+      التفضيلات
+    </h1>
+
+    <div class="likes-search">
+      <input type="text" id="likesSearchInput" placeholder="ابحث في مفضلاتك...">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+    </div>
+
+    <div class="likes-filters" id="likesCategoriesBar">
+      <button class="cat-pill active" data-cat="الكل">الكل</button>
+      <button class="cat-pill" data-cat="مسلسلات تركيه">تركي</button>
+      <button class="cat-pill" data-cat="مسلسلات مصريه">مصري</button>
+      <button class="cat-pill" data-cat="مسلسلات اجنبيه">أجنبي</button>
+      <button class="cat-pill" data-cat="مسلسلات كوريه">كوري</button>
+      <button class="cat-pill" data-cat="مسلسلات انمي">أنمي</button>
+      <button class="cat-pill" data-cat="سلاسل افلام">سلاسل أفلام</button>
+      <button class="cat-pill" data-cat="افلام اجنبيه">أفلام أجنبية</button>
+      <button class="cat-pill" data-cat="افلام انميشن">أنيميشن</button>
+    </div>
+
+    <div class="likes-grid" id="likesGrid"></div>
+    
+    <div class="no-results" id="likesEmpty" style="display:none;">
+      <svg viewBox="0 0 24 24" style="stroke: var(--heart-color); opacity: 0.5;"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+      <h3>لا توجد نتائج بعد</h3>
+      <p>لم تقم بإعجاب أي عمل حتى الآن. ابدأ بتصفح الأفلام.</p>
+      <button onclick="backFromLikes()">استكشف الأعمال الآن</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ صفحة التفاصيل ============ -->
+<div id="detailView" class="detail-view" style="display:none;">
+  <div class="app-container">
+    <div class="hero-section">
+      <img id="heroImage" src="" alt="غلاف المحتوى" class="hero-image">
+      <div class="hero-gradient"></div>
+      <div class="back-btn" onclick="goBack()" role="button" tabindex="0" aria-label="رجوع">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </div>
+      <div class="rating-badge" id="ratingBadge"></div>
+      <div class="hero-title"><h1 id="heroTitle">عنوان المحتوى</h1></div>
+    </div>
+    <div class="content-section">
+      <div class="meta-row">
+        <div class="meta-pill"><svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg><span id="durationText">40 دقيقة</span></div>
+        <div class="meta-pill"><svg viewBox="0 0 24 24"><path d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V5h18v14zM8 15c0-1.66 1.34-3 3-3 .35 0 .69.07 1 .18V6h5v2h-3v7.03c-.02 1.64-1.35 2.97-3 2.97-1.66 0-3-1.34-3-3z"/></svg><span id="episodesText">16 حلقة</span></div>
+        <div class="meta-pill"><svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg><span id="yearText">2024</span></div>
+      </div>
+      <div class="status-row">
+        <div class="status-pill"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span id="statusText">مكتمل</span></div>
+      </div>
+      
+      <!-- تم حذف زر الإعجاب من هنا -->
+      <div class="action-buttons">
+        <a href="#" id="telegramBtn" target="_blank" rel="noopener" class="btn-modern btn-telegram">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>قناة التليجرام
+        </a>
+      </div>
+      
+      <div class="genres-row" id="genresRow"></div>
+      <div class="story-section">
+        <h2>القصة</h2>
+        <div class="story-text" id="storyText"></div>
+        <a href="javascript:void(0)" class="read-more" id="readMoreBtn" onclick="toggleReadMore()">اقرأ المزيد</a>
+      </div>
+      
+      <div class="star-rating-box">
+        <h3>تقييمك للموقع</h3>
+        <div class="stars" id="starsContainer" role="radiogroup" aria-label="تقييم الموقع"></div>
+        <p class="rating-note">تم حفظ تقييمك في المتصفح بنجاح</p>
+      </div>
+
+      <div class="characters-section">
+        <h2>أبرز الشخصيات</h2>
+        <div class="characters-list" id="charactersList"></div>
+      </div>
+    </div>
+    <div class="custom-footer">
+      <h3>م/ احمد الداوودي</h3>
+      <p>للتواصل او طلب التعديل عن خطاء او اضافه</p>
+      <a href="https://wa.me/+967730225089" target="_blank" rel="noopener" class="whatsapp-btn">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>تواصل عبر الواتساب
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+'use strict';
+const TG='https://t.me/moviez_tm';
+const TM='https://image.tmdb.org/t/p/w500/';
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const escXml=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&apos;'}[c]));
+
+let toastTimer;
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2500);}
+window.toast=toast;
+
+function posterFallback(title,color){
+  const raw=String(title||'');const t=escXml(raw.length>22?raw.slice(0,22)+'…':raw);
+  const c=/^#[0-9a-f]{3,8}$/i.test(color||'')?color:'#00b8a9';
+  const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="400" height="600" viewBox="0 0 400 600"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0d1117"/><stop offset="0.55" stop-color="${c}"/><stop offset="1" stop-color="#0d1117"/></linearGradient><linearGradient id="s" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="rgba(0,0,0,0)"/><stop offset="0.7" stop-color="rgba(0,0,0,0.55)"/><stop offset="1" stop-color="rgba(0,0,0,0.85)"/></linearGradient></defs><rect width="400" height="600" fill="url(#g)"/><circle cx="200" cy="230" r="70" fill="rgba(255,255,255,0.08)"/><text x="200" y="255" text-anchor="middle" font-size="72">🎬</text><rect y="400" width="400" height="200" fill="url(#s)"/><text x="200" y="500" text-anchor="middle" font-family="Tahoma,Arial" font-weight="bold" font-size="24" fill="#fff">${t}</text><text x="200" y="540" text-anchor="middle" font-family="Tahoma,Arial" font-size="15" fill="#b8d4d0">Moviez™</text></svg>`;
+  return 'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
+}
+
+const CATS=["مسلسلات تركيه","مسلسلات اجنبيه","مسلسلات كوريه","مسلسلات مصريه","مسلسلات انمي","سلاسل افلام","افلام اجنبيه","افلام انميشن"];
+
+const DATA=[
+["حب محتمل",2026,0,8.7,"#8b5a2b","جديد","120 دقيقة","مستمر","يعرض الآن","رومانسي|دراما|كوميدي","قصة حب مليئة بالمواقف الكوميدية والرومانسية بين شخصين مختلفين تماماً، حيث تتشابك حياتهما بالصدفة وتتوالى الأحداث المثيرة.","https://image.tmdb.org/t/p/w500/ask-mantik-intikam-poster.jpg","مراد|ليلى|عمر|سلمى","https://t.me/hm_m_t"],
+["لازلت في السابعة عشر",2025,0,8.5,"#8b5a2b","الأكثر مشاهدة","120 دقيقة","مستمر","يعرض الآن","دراما|شبابي|عائلي","قصة درامية تتابع حياة مجموعة من المراهقين في سن السابعة عشر، وتستكشف تحديات النمو، والأسرار العائلية، والعلاقات المعقدة في عالم يملؤه الصراع بين الأحلام والواقع.","https://image.tmdb.org/t/p/w500/mS4Z2b8yW3R3s7T4z1G5e9x2K1.jpg","عمر|أوزجي|إبراهيم|أحمد","https://t.me/mo_t_17"],
+["اسطنبول رأساً على عقب",2025,0,8.2,"#2b3a67","الأكثر مشاهدة","120 دقيقة","مستمر","يعرض الآن","دراما|كوميدي|عائلي","تتشابك حياة عائلتين من طبقتين اجتماعيتين مختلفتين في مدينة إسطنبول، مما يؤدي إلى سلسلة من الأحداث الكوميدية والدرامية التي تقلب حياتهما رأساً على عقب، وسط صراعات الحب والمال.","https://image.tmdb.org/t/p/w500/f8j9X2y3Z4w5V6u7T8s9R0q1P2.jpg","عمر|سيمون|علي|زينب","https://t.me/is_m_t"],
+["قانون الطبيعة",2025,0,8.0,"#1e5b2a","الأكثر مشاهدة","120 دقيقة","مستمر","يعرض الآن","دراما|رومانسي|انتقام","يدور العمل حول 'يامان' المهندس المثالي الذي يتعرض للإهانة من 'دوغا' ابنة رجل أعمال ثري. بعد سنوات، تجمعهما الصدفة مجدداً في مزرعة، لتنقلب الأدوار وتفرض الطبيعة قوانينها في قصة مليئة بالحب والانتقام.","https://image.tmdb.org/t/p/w500/a1B2c3D4e5F6g7H8i9J0k1L2m3.jpg","يامان|دوغا|جم|ليل",TG],
+["تحت الأرض",2025,0,8.3,"#a01842","الأكثر مشاهدة","120 دقيقة","مستمر","يعرض الآن","دراما|جريمة|أكشن","بعد تلفيق تهمة له ومقتل عائلته، يُسجن 'حيدر علي'. هناك، يجد نفسه متورطاً مع أخطر العصابات الإجرامية، ليخوض رحلة قاسية تحت الأرض مليئة بالصراعات والمواجهات الدموية بحثاً عن الحقيقة والانتقام.","https://image.tmdb.org/t/p/w500/z9Y8x7W6v5U4t3S2r1Q0p9O8n7.jpg","حيدر علي|بينار|جيهان|ميرت",TG],
+["Breaking Bad",2008,1,9.5,"#1e5b2a","أسطوري","47 دقيقة","62 حلقة","مكتمل","دراما|جريمة","مدرس كيمياء يتحول لتاجر مخدرات.","TM/ggFHVNu6YYI5L9pCfOacjizRGt.jpg","والتر وايت|https://image.tmdb.org/t/p/w200/zt1k9X5z1vX5w2x8t0x6x1x2x3.jpg,جيسي بينكمان|https://image.tmdb.org/t/p/w200/x1x2x3x4x5x6x7x8x9x0x1.jpg",TG],
+["Game of Thrones",2011,1,9.2,"#2b3a67","ملحمي","57 دقيقة","73 حلقة","مكتمل","فانتازيا|دراما","صراع على العرش.","TM/1XS1oqL89opfnbLl8WnZY1O1uJx.jpg","جون سنو|https://image.tmdb.org/t/p/w200/j1j2j3j4j5j6j7j8j9j0j1j2.jpg,دينيريس|https://image.tmdb.org/t/p/w200/d1d2d3d4d5d6d7d8d9d0d1d2.jpg",TG],
+["Stranger Things",2016,1,8.7,"#a01842","خيال علمي","50 دقيقة","34 حلقة","مكتمل","خيال علمي|رعب","أطفال يواجهون قوى خارقة.","TM/49WJfeN0moxb9IPfGn8AIqMGskD.jpg","إيليفن|https://image.tmdb.org/t/p/w200/e1e2e3e4e5e6e7e8e9e0e1e2.jpg,مايك|https://image.tmdb.org/t/p/w200/m1m2m3m4m5m6m7m8m9m0m1.jpg",TG],
+["The Office",2005,1,9.0,"#8b5a2b","كوميديا","22 دقيقة","201 حلقة","مكتمل","كوميديا","حياة موظفي مكتب.","TM/qWnJzyZhyy74gjpSjIXWmuk0ifX.jpg","مايكل سكوت|https://image.tmdb.org/t/p/w200/ms1ms2ms3ms4ms5ms6ms7ms8.jpg,دوايت|https://image.tmdb.org/t/p/w200/d1d2d3d4d5d6d7d8d9d0d1d2.jpg",TG],
+["Sherlock",2010,1,9.1,"#1f4f5a","غموض","88 دقيقة","13 حلقة","مكتمل","جريمة|غموض","شيرلوك في العصر الحديث.","TM/7WTsnHkbA0FaG6R9twfFde0I9hl.jpg","شيرلوك هولمز|https://image.tmdb.org/t/p/w200/s1s2s3s4s5s6s7s8s9s0s1.jpg,جون واتسون|https://image.tmdb.org/t/p/w200/j1j2j3j4j5j6j7j8j9j0j1j2.jpg",TG],
+["Peaky Blinders",2013,1,8.8,"#3b4a2b","جريمة","60 دقيقة","36 حلقة","مكتمل","جريمة|دراما","عصابة برمنغهام.","TM/vUUqzWa2LnHIVqkaKVlVGkVcZIW.jpg","توماس شيلبي|https://image.tmdb.org/t/p/w200/t1t2t3t4t5t6t7t8t9t0t1.jpg,آرثر|https://image.tmdb.org/t/p/w200/a1a2a3a4a5a6a7a8a9a0a1a2.jpg",TG],
+["Dark",2017,1,8.8,"#2c3e70","خيال علمي","60 دقيقة","26 حلقة","مكتمل","خيال علمي|غموض","سفر عبر الزمن.","TM/apbrbWs8M9lyOpJYU5WXrpFbk1Z.jpg","جوناس|https://image.tmdb.org/t/p/w200/j1j2j3j4j5j6j7j8j9j0j1j2.jpg,مارثا|https://image.tmdb.org/t/p/w200/m1m2m3m4m5m6m7m8m9m0m1.jpg",TG],
+["Money Heist",2017,1,8.2,"#7a2b2b","إثارة","50 دقيقة","41 حلقة","مكتمل","جريمة|إثارة","سرقة البنك المركزي.","TM/reEMJA1uzscCbkpeRJeTT2bjqUp.jpg","طوكيو|https://image.tmdb.org/t/p/w200/t1t2t3t4t5t6t7t8t9t0t1.jpg,البروفيسور|https://image.tmdb.org/t/p/w200/p1p2p3p4p5p6p7p8p9p0p1.jpg",TG],
+["Black Mirror",2011,1,8.3,"#2b3a67","ديستوبيا","60 دقيقة","27 حلقة","مستمر","خيال علمي|دراما","قصص عن التكنولوجيا.","TM/7PRddO7z7mcPi21nZTCMGShAyy1.jpg","شخصيات متغيرة|https://image.tmdb.org/t/p/w200/b1b2b3b4b5b6b7b8b9b0b1b2.jpg,بريان|https://image.tmdb.org/t/p/w200/b1b2b3b4b5b6b7b8b9b0b1b2.jpg",TG],
+["Better Call Saul",2015,1,9.0,"#3b4a2b","دراما","46 دقيقة","63 حلقة","مكتمل","جريمة|دراما","محامي منحرف.","TM/fC2HDm5t0kHl7mTm7jxMR31b7by.jpg","جيمي مكجيل|https://image.tmdb.org/t/p/w200/j1j2j3j4j5j6j7j8j9j0j1j2.jpg,كيم ويكسلر|https://image.tmdb.org/t/p/w200/k1k2k3k4k5k6k7k8k9k0k1.jpg",TG],
+["The Mandalorian",2019,1,8.6,"#a01842","خيال علمي","40 دقيقة","24 حلقة","مستمر","خيال علمي|أكشن","مقاتل في حرب النجوم.","TM/eU1i6eHXlzMOlEq0ku1Rzq7Y4wA.jpg","دين جارين|https://image.tmdb.org/t/p/w200/d1d2d3d4d5d6d7d8d9d0d1d2.jpg,غروغو|https://image.tmdb.org/t/p/w200/g1g2g3g4g5g6g7g8g9g0g1.jpg",TG],
+["The Last of Us",2023,1,8.7,"#7a2b2b","دراما","60 دقيقة","9 حلقات","مستمر","دراما|رعب","عالم بعد الوباء.","TM/uKvVjHNqB5VmOrdxqAt2F7J78ED.jpg","جول|https://image.tmdb.org/t/p/w200/j1j2j3j4j5j6j7j8j9j0j1j2.jpg,إيلي|https://image.tmdb.org/t/p/w200/e1e2e3e4e5e6e7e8e9e0e1e2.jpg",TG],
+["Wednesday",2022,1,8.1,"#2c3e70","غموض","50 دقيقة","8 حلقات","مستمر","كوميديا|غموض","مغامرات وينزدي.","TM/9PFonBhy4cQy7Jz20NpMygczOkv.jpg","وينزدي|https://image.tmdb.org/t/p/w200/w1w2w3w4w5w6w7w8w9w0w1.jpg,إنيد|https://image.tmdb.org/t/p/w200/e1e2e3e4e5e6e7e8e9e0e1e2.jpg",TG],
+["Lucifer",2016,1,8.1,"#1e5b2a","فانتازيا","45 دقيقة","93 حلقة","مكتمل","فانتازيا|جريمة","الشيطان في لوس أنجلوس.","TM/4EYPN5mVIhKL5fJvTAHfm7tL4kF.jpg","لوسيفر|https://image.tmdb.org/t/p/w200/l1l2l3l4l5l6l7l8l9l0l1.jpg,كلوي|https://image.tmdb.org/t/p/w200/k1k2k3k4k5k6k7k8k9k0k1.jpg",TG],
+["Vikings",2013,1,8.5,"#8b5a2b","تاريخي","45 دقيقة","89 حلقة","مكتمل","تاريخي|أكشن","مغامرات الفايكنج.","TM/bQLrHIRNEkEraXQ2VkQvjQIaXKw.jpg","راجنار|https://image.tmdb.org/t/p/w200/r1r2r3r4r5r6r7r8r9r0r1.jpg,لاجيرثا|https://image.tmdb.org/t/p/w200/l1l2l3l4l5l6l7l8l9l0l1.jpg",TG],
+["Squid Game",2021,2,8.5,"#a01842","عالمي","55 دقيقة","9 حلقات","مستمر","إثارة|دراما","ألعاب قاتلة.","TM/dDlEmu3EZ0Pgg93K2SVNLCjCSvE.jpg","سيونغ جي-هون|https://image.tmdb.org/t/p/w200/s1s2s3s4s5s6s7s8s9s0s1.jpg,تشو سانغ-وو|https://image.tmdb.org/t/p/w200/c1c2c3c4c5c6c7c8c9c0c1c2.jpg",TG],
+["حكاية نرجس",2026,3,8.5,"#8b5a2b","الأكثر مشاهدة","45 دقيقة","30 حلقة","مكتمل","دراما|اجتماعي","دراما اجتماعية.","https://image.tmdb.org/t/p/w500/hekayat-narges-poster.jpg","نرجس|كريم|سلمى|حسن",TG],
+["على كلاي",2026,3,8.2,"#2b3a67","رمضان 2026","45 دقيقة","30 حلقة","مكتمل","دراما|شعبي","دراما شعبية.","https://image.tmdb.org/t/p/w500/ali-clay-poster.jpg","علي|فاطمة|محمود|زينب",TG],
+["اتنين غيرنا",2026,3,8.0,"#5a3d1e","رمضان 2026","45 دقيقة","30 حلقة","مكتمل","دراما","دراما.","https://image.tmdb.org/t/p/w500/etneen-gherna-poster.jpg","أحمد|سارة|عمر|ليلى",TG],
+["درش",2026,3,7.9,"#1f4f5a","رمضان 2026","45 دقيقة","30 حلقة","مكتمل","دراما","دراما.","https://image.tmdb.org/t/p/w500/darsh-poster.jpg","درش|حسن|مريم|علي",TG],
+["رأس الأفعى",2026,3,8.3,"#3b4a2b","أكشن","45 دقيقة","30 حلقة","مكتمل","أكشن|دراما","أكشن.","https://image.tmdb.org/t/p/w500/ras-el-afaa-poster.jpg","رأفت|سلمى|كريم|نور",TG],
+["فرصة أخيرة",2026,3,8.1,"#a01842","15 حلقة","45 دقيقة","15 حلقة","مكتمل","دراما","دراما قصيرة.","https://image.tmdb.org/t/p/w500/forsa-akhira-poster.jpg","ياسين|جميلة|طارق|هالة",TG],
+["Attack on Titan",2013,4,9.0,"#7a2b2b","أسطوري","24 دقيقة","87 حلقة","مكتمل","أكشن|دراما|فانتازيا","العملاق يهدد البشرية.","https://cdn.myanimelist.net/images/anime/10/47347.jpg","إرين|https://image.tmdb.org/t/p/w200/e1e2e3e4e5e6e7e8e9e0e1e2.jpg,ميكاسا|https://image.tmdb.org/t/p/w200/m1m2m3m4m5m6m7m8m9m0m1.jpg",TG],
+["Death Note",2006,4,8.9,"#4a4a4a","نفسي","23 دقيقة","37 حلقة","مكتمل","غموض|نفسي","مذكرة قتل.","https://cdn.myanimelist.net/images/anime/9/9453.jpg","لايت|https://image.tmdb.org/t/p/w200/l1l2l3l4l5l6l7l8l9l0l1.jpg,إل|https://image.tmdb.org/t/p/w200/e1e2e3e4e5e6e7e8e9e0e1e2.jpg",TG],
+["Fullmetal Alchemist: Brotherhood",2009,4,9.1,"#8b5a2b","خيميائي","24 دقيقة","64 حلقة","مكتمل","فانتازيا|مغامرة","حجر الفلاسفة.","https://cdn.myanimelist.net/images/anime/1223/96541.jpg","إدوارد|https://image.tmdb.org/t/p/w200/e1e2e3e4e5e6e7e8e9e0e1e2.jpg,ألفونس|https://image.tmdb.org/t/p/w200/a1a2a3a4a5a6a7a8a9a0a1a2.jpg",TG],
+["One Piece",1999,4,8.7,"#1f4f5a","مستمر","24 دقيقة","مستمر","مستمر","مغامرة|كوميديا","البحث عن الكنز.","https://cdn.myanimelist.net/images/anime/6/73245.jpg","لوفي|https://image.tmdb.org/t/p/w200/l1l2l3l4l5l6l7l8l9l0l1.jpg,زورو|https://image.tmdb.org/t/p/w200/z1z2z3z4z5z6z7z8z9z0z1.jpg",TG],
+["Demon Slayer",2019,4,8.5,"#a01842","قاتل","24 دقيقة","63 حلقة","مستمر","أكشن|فانتازيا","قتل الشياطين.","https://cdn.myanimelist.net/images/anime/1286/99889.jpg","تانجيرو|https://image.tmdb.org/t/p/w200/t1t2t3t4t5t6t7t8t9t0t1.jpg,نيزوكو|https://image.tmdb.org/t/p/w200/n1n2n3n4n5n6n7n8n9n0n1.jpg",TG],
+["Jujutsu Kaisen",2020,4,8.6,"#2c3e70","سحر","24 دقيقة","47 حلقة","مستمر","أكشن|فانتازيا","سحر ولعنات.","https://cdn.myanimelist.net/images/anime/1171/109222.jpg","يوجي|https://image.tmdb.org/t/p/w200/y1y2y3y4y5y6y7y8y9y0y1.jpg,ميغومي|https://image.tmdb.org/t/p/w200/m1m2m3m4m5m6m7m8m9m0m1.jpg",TG],
+["Naruto Shippuden",2007,4,8.7,"#8b5a2b","نينجا","23 دقيقة","500 حلقة","مكتمل","أكشن|مغامرة","طريق النينجا.","https://cdn.myanimelist.net/images/anime/5/17407.jpg","ناروتو|https://image.tmdb.org/t/p/w200/n1n2n3n4n5n6n7n8n9n0n1.jpg,ساسكي|https://image.tmdb.org/t/p/w200/s1s2s3s4s5s6s7s8s9s0s1.jpg",TG],
+["My Hero Academia",2016,4,8.3,"#1e5b2a","أبطال","24 دقيقة","159 حلقة","مستمر","أكشن|مغامرة","أكاديمية الأبطال.","https://cdn.myanimelist.net/images/anime/10/78745.jpg","ميدوريا|https://image.tmdb.org/t/p/w200/m1m2m3m4m5m6m7m8m9m0m1.jpg,باكوغو|https://image.tmdb.org/t/p/w200/b1b2b3b4b5b6b7b8b9b0b1b2.jpg",TG],
+["Harry Potter",2001,5,7.9,"#5a3d1e","سلسلة كاملة","152 دقيقة","8 أفلام","مكتمل","فانتازيا|مغامرة","مغامرات هاري بوتر في عالم السحر.","https://image.tmdb.org/t/p/w500/wuMc08IPKEatf9rnMNXvIDxqP4W.jpg","هاري|https://image.tmdb.org/t/p/w200/h1h2h3h4h5h6h7h8h9h0h1.jpg,رون|https://image.tmdb.org/t/p/w200/r1r2r3r4r5r6r7r8r9r0r1.jpg",TG],
+["The Lord of the Rings",2001,5,8.8,"#2b3a67","ملحمي","178 دقيقة","3 أفلام","مكتمل","فانتازيا|مغامرة","رحلة تدمير الخاتم.","https://image.tmdb.org/t/p/w500/6oom5QYQ2yQTMJIbnvbkBL9cHo6.jpg","فرودو|https://image.tmdb.org/t/p/w200/f1f2f3f4f5f6f7f8f9f0f1f2.jpg,سام|https://image.tmdb.org/t/p/w200/s1s2s3s4s5s6s7s8s9s0s1.jpg",TG],
+["John Wick",2014,5,7.4,"#4a4a4a","أكشن","101 دقيقة","4 أفلام","مستمر","أكشن|إثارة","قصة القاتل المحترف.","https://image.tmdb.org/t/p/w500/fZPSd91yGE9fCcCe6OoQr6E3Bev.jpg","جون ويك|https://image.tmdb.org/t/p/w200/j1j2j3j4j5j6j7j8j9j0j1j2.jpg,وينستون|https://image.tmdb.org/t/p/w200/w1w2w3w4w5w6w7w8w9w0w1.jpg",TG],
+["The Godfather",1972,5,9.2,"#1e5b2a","كلاسيكي","175 دقيقة","3 أفلام","مكتمل","جريمة|دراما","عائلة كورليوني.","https://image.tmdb.org/t/p/w500/3bhkrj58Vtu7enYsRolD1fZdja1.jpg","فيتو|https://image.tmdb.org/t/p/w200/v1v2v3v4v5v6v7v8v9v0v1.jpg,مايكل|https://image.tmdb.org/t/p/w200/m1m2m3m4m5m6m7m8m9m0m1.jpg",TG],
+["Mission: Impossible",1996,5,7.1,"#7a2b2b","أكشن","110 دقيقة","7 أفلام","مستمر","أكشن|تجسس","مهمات إيثان هانت.","https://upload.wikimedia.org/wikipedia/en/1/1a/Mission_Impossible_poster.jpg","إيثان هانت|https://image.tmdb.org/t/p/w200/e1e2e3e4e5e6e7e8e9e0e1e2.jpg,لوثر|https://image.tmdb.org/t/p/w200/l1l2l3l4l5l6l7l8l9l0l1.jpg",TG],
+["The Dark Knight",2008,6,9.0,"#2b3a67","WEB-DL","152 دقيقة","فيلم","مكتمل","أكشن|جريمة","باتمان والجوكر.","TM/qJ2tW6WMUDux911r6m7haRef0WH.jpg","باتمان|https://image.tmdb.org/t/p/w200/b1b2b3b4b5b6b7b8b9b0b1b2.jpg,الجوكر|https://image.tmdb.org/t/p/w200/j1j2j3j4j5j6j7j8j9j0j1j2.jpg",TG],
+["Inception",2010,6,8.8,"#4a4a4a","خيال علمي","148 دقيقة","فيلم","مكتمل","خيال علمي|أكشن","سرقة الأحلام.","TM/9gk7adHYeDvHkCSEqAvQNLV5Uge.jpg","كوب|https://image.tmdb.org/t/p/w200/c1c2c3c4c5c6c7c8c9c0c1c2.jpg,آرثر|https://image.tmdb.org/t/p/w200/a1a2a3a4a5a6a7a8a9a0a1a2.jpg",TG],
+["Interstellar",2014,6,8.7,"#2c3e70","4K","169 دقيقة","فيلم","مكتمل","خيال علمي|مغامرة","ثقب دودي.","TM/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg","كوبر|https://image.tmdb.org/t/p/w200/c1c2c3c4c5c6c7c8c9c0c1c2.jpg,ميرف|https://image.tmdb.org/t/p/w200/m1m2m3m4m5m6m7m8m9m0m1.jpg",TG],
+["The Matrix",1999,6,8.7,"#1e5b2a","كلاسيكي","136 دقيقة","فيلم","مكتمل","خيال علمي|أكشن","المصفوفة.","TM/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg","نيو|https://image.tmdb.org/t/p/w200/n1n2n3n4n5n6n7n8n9n0n1.jpg,مورفيوس|https://image.tmdb.org/t/p/w200/m1m2m3m4m5m6m7m8m9m0m1.jpg",TG],
+["Joker",2019,6,8.4,"#a01842","دراما","122 دقيقة","فيلم","مكتمل","دراما|جريمة","أصل الجوكر.","TM/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg","آرثر فليك|https://image.tmdb.org/t/p/w200/a1a2a3a4a5a6a7a8a9a0a1a2.jpg,موري|https://image.tmdb.org/t/p/w200/m1m2m3m4m5m6m7m8m9m0m1.jpg",TG],
+["Spirited Away",2001,7,8.6,"#1f4f5a","أوسكار","125 دقيقة","فيلم","مكتمل","خيال|عائلي","عالم الأرواح.","TM/39wmItIWsg5sZMyRUHLkWBcuVCM.jpg","تشيهيرو|https://image.tmdb.org/t/p/w200/c1c2c3c4c5c6c7c8c9c0c1c2.jpg,هاكو|https://image.tmdb.org/t/p/w200/h1h2h3h4h5h6h7h8h9h0h1.jpg",TG],
+["The Lion King",1994,7,8.5,"#8b5a2b","كلاسيكي","88 دقيقة","فيلم","مكتمل","عائلي|دراما","قصة سيمبا.","TM/sKCr78MXSLixwmZ8DyJLrpMsd15.jpg","سيمبا|https://image.tmdb.org/t/p/w200/s1s2s3s4s5s6s7s8s9s0s1.jpg,موفاسا|https://image.tmdb.org/t/p/w200/m1m2m3m4m5m6m7m8m9m0m1.jpg",TG],
+["Toy Story",1995,7,8.3,"#2b3a67","رائد","81 دقيقة","فيلم","مكتمل","عائلي|كوميديا","ألعاب حية.","TM/uXDfjJbdP4ijW5hWSBrPrlKpxab.jpg","وودي|https://image.tmdb.org/t/p/w200/w1w2w3w4w5w6w7w8w9w0w1.jpg,باز|https://image.tmdb.org/t/p/w200/b1b2b3b4b5b6b7b8b9b0b1b2.jpg",TG],
+["Finding Nemo",2003,7,8.2,"#4a4a4a","عائلي","100 دقيقة","فيلم","مكتمل","عائلي|مغامرة","سمكة تبحث عن ابنها.","TM/eHuGQ10FUzK1mdOY69wF5pGgEf5.jpg","نيمو|https://image.tmdb.org/t/p/w200/n1n2n3n4n5n6n7n8n9n0n1.jpg,مارلن|https://image.tmdb.org/t/p/w200/m1m2m3m4m5m6m7m8m9m0m1.jpg",TG],
+["Inside Out",2015,7,8.2,"#a01842","مشاعر","95 دقيقة","فيلم","مكتمل","عائلي|دراما","عواطف داخل العقل.","TM/aAmfIX3TT40z7liBK4udAGwpvTB.jpg","جوي|https://image.tmdb.org/t/p/w200/j1j2j3j4j5j6j7j8j9j0j1j2.jpg,سادنس|https://image.tmdb.org/t/p/w200/s1s2s3s4s5s6s7s8s9s0s1.jpg",TG],
+["Coco",2017,7,8.4,"#5a3d1e","موسيقي","105 دقيقة","فيلم","مكتمل","عائلي|موسيقي","عالم الموتى.","TM/gGEsBPAijhVUFoiNpgZXqRVWJt2.jpg","ميغيل|https://image.tmdb.org/t/p/w200/m1m2m3m4m5m6m7m8m9m0m1.jpg,هيكتور|https://image.tmdb.org/t/p/w200/h1h2h3h4h5h6h7h8h9h0h1.jpg",TG],
+["Frozen",2013,7,7.4,"#1f4f5a","ديزني","102 دقيقة","فيلم","مكتمل","عائلي|فانتازيا","قوى جليدية.","TM/kgwjIb2JDHRhNk13lmSxiClFjVk.jpg","إلسا|https://image.tmdb.org/t/p/w200/e1e2e3e4e5e6e7e8e9e0e1e2.jpg,آنا|https://image.tmdb.org/t/p/w200/a1a2a3a4a5a6a7a8a9a0a1a2.jpg",TG],
+["Zootopia",2016,7,8.0,"#3b4a2b","شرطة","108 دقيقة","فيلم","مكتمل","عائلي|كوميديا","مدينة الحيوانات.","TM/sM33SANp9zfByIRjHLMoEFwnDC.jpg","جودي|https://image.tmdb.org/t/p/w200/j1j2j3j4j5j6j7j8j9j0j1j2.jpg,نيك|https://image.tmdb.org/t/p/w200/n1n2n3n4n5n6n7n8n9n0n1.jpg",TG],
+["Into the Spider-Verse",2018,7,8.4,"#a01842","أكشن","117 دقيقة","فيلم","مكتمل","أكشن|مغامرة","عوالم عناكب.","TM/iiZZdoQBEYBv6id8su7ImL0oCbD.jpg","مايلز|https://image.tmdb.org/t/p/w200/m1m2m3m4m5m6m7m8m9m0m1.jpg,غوين|https://image.tmdb.org/t/p/w200/g1g2g3g4g5g6g7g8g9g0g1.jpg",TG],
+["Your Name",2016,7,8.4,"#4a4a4a","رومانسي","106 دقيقة","فيلم","مكتمل","رومانسي|فانتازيا","تبادل أجساد.","TM/q719jXXEzOoYaps6babgKnONONX.jpg","تاكي|https://image.tmdb.org/t/p/w200/t1t2t3t4t5t6t7t8t9t0t1.jpg,ميتسوها|https://image.tmdb.org/t/p/w200/m1m2m3m4m5m6m7m8m9m0m1.jpg",TG],
+["Princess Mononoke",1997,7,8.4,"#7a2b2b","جيبلي","134 دقيقة","فيلم","مكتمل","فانتازيا|مغامرة","البشر والطبيعة.","TM/cMYCDADoLKLbB83g4WnJegaZimC.jpg","أشيتاكا|https://image.tmdb.org/t/p/w200/a1a2a3a4a5a6a7a8a9a0a1a2.jpg,سان|https://image.tmdb.org/t/p/w200/s1s2s3s4s5s6s7s8s9s0s1.jpg",TG],
+["Howl's Moving Castle",2004,7,8.2,"#2c3e70","جيبلي","119 دقيقة","فيلم","مكتمل","فانتازيا|رومانسي","قلعة متحركة.","TM/TkTPELv4kC3u1lkloush8skOjE.jpg","هاول|https://image.tmdb.org/t/p/w200/h1h2h3h4h5h6h7h8h9h0h1.jpg,صوفي|https://image.tmdb.org/t/p/w200/s1s2s3s4s5s6s7s8s9s0s1.jpg",TG],
+["WALL-E",2008,7,8.4,"#8b5a2b","خيال علمي","98 دقيقة","فيلم","مكتمل","خيال علمي|عائلي","روبوت.","TM/hbhFnRzzg6ZDmm8YAmxBnQpQIPh.jpg","وول-إي|https://image.tmdb.org/t/p/w200/w1w2w3w4w5w6w7w8w9w0w1.jpg,إيف|https://image.tmdb.org/t/p/w200/e1e2e3e4e5e6e7e8e9e0e1e2.jpg",TG],
+["Up",2009,7,8.3,"#2b3a67","مغامرة","96 دقيقة","فيلم","مكتمل","مغامرة|عائلي","منزل طائر.","TM/vpbaO9pWuxW9VYw8gTvTbFdJ6SI.jpg","كارل|https://image.tmdb.org/t/p/w200/k1k2k3k4k5k6k7k8k9k0k1.jpg,راسل|https://image.tmdb.org/t/p/w200/r1r2r3r4r5r6r7r8r9r0r1.jpg",TG],
+["Ratatouille",2007,7,8.1,"#5a3d1e","طبخ","111 دقيقة","فيلم","مكتمل","عائلي|كوميديا","فأر طاهٍ.","TM/npHNjldbeTHdKKw28bJKs7lzqzj.jpg","ريمي|https://image.tmdb.org/t/p/w200/r1r2r3r4r5r6r7r8r9r0r1.jpg,لينغويني|https://image.tmdb.org/t/p/w200/l1l2l3l4l5l6l7l8l9l0l1.jpg",TG]
+];
+
+function parseCharacters(raw){
+  if(!raw) return [];
+  if(/https?:\/\/|\/t\/p\//.test(raw)){
+    return raw.split(',').map(s=>s.trim()).filter(Boolean);
+  }
+  return raw.split(/[|,]/).map(s=>s.trim()).filter(Boolean);
+}
+
+const movies=DATA.map(d=>({
+  title:d[0],year:d[1],category:CATS[d[2]],rating:d[3],color:d[4],badge:d[5],duration:d[6],episodes:d[7],status:d[8],
+  genres:d[9].split('|'),desc:d[10],
+  poster:d[11]?d[11].replace(/^TM\//,TM):'',
+  characters: parseCharacters(d[12]),
+  telegram: d[13] || TG
+}));
+window.movies = movies; 
+
+const grid=document.getElementById('moviesGrid');
+const sectionsView=document.getElementById('sectionsView');
+const searchInput=document.getElementById('searchInput');
+const noResults=document.getElementById('noResults');
+const catPills=document.querySelectorAll('#mainView .cat-pill');
+let currentCategory='الكل',currentSearch='',savedScrollY=0;
+let returnToView = 'mainView';
+
+function getFavs(){try{return JSON.parse(localStorage.getItem('moviez_favs')||'[]');}catch{return[];}}
+function saveFavs(favs){try{localStorage.setItem('moviez_favs',JSON.stringify(favs));}catch{}}
+
+function removeLike(idx){
+  const id = Number(idx);
+  saveFavs(getFavs().filter(x => x !== id));
+  toast('تمت الإزالة من التفضيلات');
+  renderLikesView();
+}
+window.removeLike = removeLike;
+
+let currentLikesFilter = 'الكل';
+let currentLikesSearch = '';
+
+function showLikesView() {
+  document.getElementById('mainView').style.display = 'none';
+  document.getElementById('detailView').style.display = 'none';
+  document.getElementById('likesView').style.display = 'flex';
+  
+  const likesCatPills = document.querySelectorAll('#likesCategoriesBar .cat-pill');
+  likesCatPills.forEach(p => p.classList.remove('active'));
+  if(likesCatPills[0]) likesCatPills[0].classList.add('active');
+  currentLikesFilter = 'الكل';
+  currentLikesSearch = '';
+  document.getElementById('likesSearchInput').value = '';
+  
+  renderLikesView();
+  window.scrollTo(0,0);
+}
+window.showLikesView = showLikesView;
+
+function backFromLikes() {
+  document.getElementById('likesView').style.display = 'none';
+  document.getElementById('mainView').style.display = 'block';
+  window.scrollTo(0,0);
+}
+window.backFromLikes = backFromLikes;
+
+function renderLikesView() {
+  const favs = getFavs(); 
+  const likesGrid = document.getElementById('likesGrid');
+  const emptyMsg = document.getElementById('likesEmpty');
+  
+  let filtered = favs.filter(idx => movies[idx]);
+  
+  if (currentLikesFilter !== 'الكل') {
+      filtered = filtered.filter(idx => movies[idx].category === currentLikesFilter);
+  }
+  
+  if (currentLikesSearch) {
+      const q = currentLikesSearch.toLowerCase();
+      filtered = filtered.filter(idx => {
+          const m = movies[idx];
+          return m.title.toLowerCase().includes(q) || m.desc.toLowerCase().includes(q);
+      });
+  }
+  
+  if (filtered.length === 0) {
+    likesGrid.innerHTML = '';
+    likesGrid.style.display = 'none';
+    emptyMsg.style.display = 'flex';
+    return;
+  }
+  
+  emptyMsg.style.display = 'none';
+  likesGrid.style.display = 'grid';
+  
+  likesGrid.innerHTML = filtered.map(idx => {
+    const m = movies[idx];
+    const src = m.poster || posterFallback(m.title, m.color);
+    return `<article class="likes-card" data-index="${idx}">
+        <div class="card-poster">
+            <img src="${src}" alt="${esc(m.title)}" loading="lazy">
+            <span class="badge">${esc(m.status)}</span>
+            <span class="rating">${esc(m.rating)} ★</span>
+            <div class="card-actions">
+                <button class="action-icon icon-heart" data-remove-idx="${idx}" title="إزالة من التفضيلات">
+                    <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                </button>
+            </div>
+        </div>
+        <div class="card-info">
+            <h3>${esc(m.title)}</h3>
+        </div>
+    </article>`;
+  }).join('');
+  
+  bindImgFallbacks(likesGrid);
+}
+
+document.getElementById('likesGrid').addEventListener('click', e => {
+  const removeBtn = e.target.closest('[data-remove-idx]');
+  if (removeBtn) {
+    e.stopPropagation();
+    removeLike(Number(removeBtn.dataset.removeIdx));
+    return;
+  }
+  const card = e.target.closest('.likes-card');
+  if (!card) return;
+  const idx = Number(card.dataset.index);
+  if (!isNaN(idx) && movies[idx]) showDetail(movies[idx], idx, false);
+});
+
+document.querySelectorAll('#likesCategoriesBar .cat-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+        document.querySelectorAll('#likesCategoriesBar .cat-pill').forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        currentLikesFilter = pill.dataset.cat;
+        renderLikesView();
+    });
+});
+
+document.getElementById('likesSearchInput').addEventListener('input', (e) => {
+    currentLikesSearch = e.target.value.trim();
+    renderLikesView();
+});
+
+function cardHTML(m,i){
+  const src=m.poster||posterFallback(m.title,m.color);
+  return `<article class="movie-card" data-index="${i}" tabindex="0" role="button" aria-label="${esc(m.title)}">
+    <div class="card-poster"><img src="${src}" alt="${esc(m.title)}" loading="lazy"><span class="badge">${esc(m.badge)}</span><span class="rating">★ ${esc(m.rating)}</span></div>
+    <div class="card-info"><h3>${esc(m.title)}</h3><div class="card-meta"><span>📅 ${esc(m.year)}</span><span>🎭 ${esc(m.category)}</span></div></div>
+  </article>`;
+}
+
+function bindImgFallbacks(c){
+  c.querySelectorAll('img').forEach(img=>{
+    img.addEventListener('error',()=>{
+        const card = img.closest('[data-index]');
+        if(card && card.dataset.index){
+            const m=movies[+card.dataset.index];
+            if(m) img.src=posterFallback(m.title,m.color);
+        }
+    },{once:true});
+  });
+}
+
+function renderSectionsView(){
+  let html='';
+  CATS.forEach(cat=>{
+    const items=movies.map((m,i)=>({m,i})).filter(({m})=>m.category===cat);
+    if(!items.length)return;
+    html+=`<section class="row-section" data-cat="${esc(cat)}">
+      <div class="row-head"><h2 class="row-title">${esc(cat)}</h2>
+      <button class="row-viewall" data-cat="${esc(cat)}">عرض الكل
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      </button></div>
+      <div class="h-scroll">${items.map(({m,i})=>cardHTML(m,i)).join('')}</div>
+    </section>`;
+  });
+  sectionsView.innerHTML=html;
+  bindImgFallbacks(sectionsView);
+}
+
+function renderGridView(q){
+  const matches=[];
+  movies.forEach((m,i)=>{
+    const matchCat=currentCategory==='الكل'||m.category===currentCategory;
+    const hay=[m.title,m.category,m.desc||'',...(m.genres||[])].join(' ').toLowerCase();
+    const matchSearch=!q||hay.includes(q);
+    if(matchCat&&matchSearch)matches.push({m,i});
+  });
+  if(!matches.length){
+      grid.innerHTML='';grid.style.display='none';noResults.style.display='flex';
+      document.getElementById('noResTitle').textContent = 'لا توجد نتائج';
+      document.getElementById('noResDesc').textContent = 'جرّب كلمة بحث مختلفة أو اختر تصنيفاً آخر';
+      return;
+  }
+  noResults.style.display='none';
+  grid.style.display='grid';
+  grid.innerHTML=matches.map(({m,i})=>cardHTML(m,i)).join('');
+  bindImgFallbacks(grid);
+}
+
+function renderMovies(){
+  const q=currentSearch.trim().toLowerCase();
+  const showSections=!q&&currentCategory==='الكل';
+  if(showSections){sectionsView.style.display='block';grid.style.display='none';noResults.style.display='none';renderSectionsView();}
+  else{sectionsView.style.display='none';grid.style.display='grid';renderGridView(q);}
+}
+
+function updateReadMoreVisibility(){
+  const s=document.getElementById('storyText'),b=document.getElementById('readMoreBtn');
+  if(s.classList.contains('expanded')){b.style.display='inline-block';return;}
+  b.style.display=(s.scrollHeight>s.clientHeight+2)?'inline-block':'none';
+}
+
+function showDetail(movie, idx, fromHistory){
+  if(!fromHistory){
+    savedScrollY = window.scrollY;
+    returnToView = document.getElementById('likesView').style.display === 'flex' ? 'likesView' : 'mainView';
+    history.pushState({view:'detail', idx}, '', '#detail-'+idx);
+  }
+  
+  const heroImg=document.getElementById('heroImage');
+  heroImg.onerror=()=>{heroImg.onerror=null;heroImg.src=posterFallback(movie.title,movie.color);};
+  heroImg.src=movie.poster||posterFallback(movie.title,movie.color);
+  heroImg.alt=movie.title;
+  document.getElementById('heroTitle').textContent=movie.title;
+  
+  const rb=document.getElementById('ratingBadge');
+  rb.textContent='';
+  rb.append(document.createTextNode(String(movie.rating)));
+  const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  svg.setAttribute('width','16');svg.setAttribute('height','16');svg.setAttribute('viewBox','0 0 24 24');svg.setAttribute('fill','currentColor');
+  const p=document.createElementNS('http://www.w3.org/2000/svg','polygon');
+  p.setAttribute('points','12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2');
+  svg.appendChild(p);rb.appendChild(svg);
+  
+  document.getElementById('durationText').textContent=movie.duration||'40 دقيقة';
+  document.getElementById('episodesText').textContent=movie.episodes||'16 حلقة';
+  document.getElementById('yearText').textContent=movie.year||'2024';
+  document.getElementById('statusText').textContent=movie.status||'مكتمل';
+
+  const tg=document.getElementById('telegramBtn');
+  if(movie.telegram){tg.href=movie.telegram;tg.style.display='flex';}else{tg.href='#';tg.style.display='none';}
+
+  const gr=document.getElementById('genresRow');gr.innerHTML='';
+  (movie.genres&&movie.genres.length?movie.genres:[movie.category]).forEach(g=>{
+    const pill=document.createElement('div');pill.className='genre-pill';pill.textContent=g;gr.appendChild(pill);
+  });
+  const st=document.getElementById('storyText');
+  st.textContent=movie.desc||'لا يوجد وصف.';st.classList.remove('expanded');
+  document.getElementById('readMoreBtn').innerText='اقرأ المزيد';
+
+  const cl=document.getElementById('charactersList');cl.innerHTML='';
+  if (movie.characters && movie.characters.length > 0) {
+    movie.characters.forEach(charData => {
+      let name = charData, imgUrl = null;
+      const pipeIdx = charData.indexOf('|');
+      if(pipeIdx > -1){
+        const candidate = charData.slice(pipeIdx + 1).trim();
+        if(/^(https?:|\/)/.test(candidate)){
+          name = charData.slice(0, pipeIdx).trim();
+          imgUrl = candidate;
+        }
+      }
+      if(!name) return;
+      if(!imgUrl){
+        imgUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=10606F&color=E2F4F0&size=128&font-size=0.4&rounded=true`;
+      }
+      const box = document.createElement('div');
+      box.className = 'character-box';
+      const img = document.createElement('img');
+      img.src = imgUrl;
+      img.alt = name;
+      img.className = 'character-avatar';
+      img.loading = 'lazy';
+      img.onerror = () => {
+        img.onerror = null;
+        img.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=10606F&color=E2F4F0&size=128&font-size=0.4&rounded=true`;
+      };
+      const span = document.createElement('span');
+      span.textContent = name;
+      box.appendChild(img);
+      box.appendChild(span);
+      cl.appendChild(box);
+    });
+  }
+
+  document.getElementById('mainView').style.display='none';
+  document.getElementById('likesView').style.display='none';
+  document.getElementById('detailView').style.display='flex';
+  window.scrollTo(0,0);
+  requestAnimationFrame(updateReadMoreVisibility);
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(updateReadMoreVisibility);
+}
+
+function backToMain(){
+  document.getElementById('detailView').style.display='none';
+  if (returnToView === 'likesView') {
+      document.getElementById('likesView').style.display='flex';
+      renderLikesView(); 
+  } else {
+      document.getElementById('mainView').style.display='block';
+  }
+  window.scrollTo(0,savedScrollY||0);
+  if(/^#detail-\d+$/.test(location.hash))history.replaceState({view:'main'},'',location.pathname+location.search);
+}
+
+function goBack(){if(history.state&&history.state.view==='detail')history.back();else backToMain();}
+window.goBack=goBack;
+
+window.addEventListener('popstate',e=>{
+  if(e.state&&e.state.view==='detail'&&typeof e.state.idx==='number'){
+    if(document.getElementById('detailView').style.display==='none')savedScrollY=window.scrollY;
+    showDetail(movies[e.state.idx],e.state.idx,true);
+  }else backToMain();
+});
+
+function toggleReadMore(){
+  const s=document.getElementById("storyText"),b=document.getElementById("readMoreBtn");
+  s.classList.toggle("expanded");
+  b.innerText=s.classList.contains("expanded")?"اقرأ أقل":"اقرأ المزيد";
+}
+window.toggleReadMore=toggleReadMore;
+
+document.querySelector('#mainView main').addEventListener('click',e=>{
+  const v=e.target.closest('.row-viewall');
+  if(v){const cat=v.dataset.cat;currentCategory=cat;currentSearch='';searchInput.value='';
+    catPills.forEach(p=>p.classList.toggle('active',p.dataset.cat===cat));renderMovies();
+    window.scrollTo({top:document.getElementById('categoriesBar').offsetTop-80,behavior:'smooth'});return;}
+  const card=e.target.closest('.movie-card');
+  if(card)showDetail(movies[+card.dataset.index],+card.dataset.index,false);
+});
+
+document.querySelector('#mainView main').addEventListener('keydown',e=>{
+  if(e.key!=='Enter'&&e.key!==' ')return;
+  const card=e.target.closest('.movie-card');
+  if(card){e.preventDefault();showDetail(movies[+card.dataset.index],+card.dataset.index,false);}
+});
+
+document.querySelector('.back-btn').addEventListener('keydown',e=>{
+  if(e.key==='Enter'||e.key===' '){e.preventDefault();goBack();}
+});
+
+let searchTimer;
+searchInput.addEventListener('input',e=>{
+  clearTimeout(searchTimer);const val=e.target.value;
+  searchTimer=setTimeout(()=>{
+    currentSearch=val.trim();
+    catPills.forEach(p=>p.classList.toggle('active',p.dataset.cat===currentCategory));
+    renderMovies();
+  },150);
+});
+catPills.forEach(pill=>{
+  pill.addEventListener('click',()=>{
+    catPills.forEach(p=>p.classList.remove('active'));pill.classList.add('active');
+    currentCategory=pill.dataset.cat;currentSearch='';searchInput.value='';renderMovies();
+  });
+});
+
+function resetFilters(){
+  currentCategory='الكل';currentSearch='';searchInput.value='';
+  catPills.forEach(p=>p.classList.toggle('active',p.dataset.cat==='الكل'));renderMovies();
+}
+window.resetFilters=resetFilters;
+
+document.getElementById('startWatch').addEventListener('click',()=>{
+  document.getElementById('categoriesBar').scrollIntoView({behavior:'smooth'});
+});
+document.getElementById('addList').addEventListener('click',()=>window.open(TG,'_blank','noopener'));
+
+const STARS_COUNT=7,starsContainer=document.getElementById('starsContainer');
+function safeGet(k){try{return localStorage.getItem(k);}catch{return null;}}
+function safeSet(k,v){try{localStorage.setItem(k,v);}catch{}}
+let userRating=parseInt(safeGet('moviez_rating')||'5',10);
+if(!Number.isFinite(userRating)||userRating<0||userRating>STARS_COUNT)userRating=5;
+for(let i=0;i<STARS_COUNT;i++){
+  const star=document.createElement('i');star.textContent='★';star.dataset.value=i+1;star.tabIndex=0;
+  star.setAttribute('role','radio');star.setAttribute('aria-label',`تقييم ${i+1} من ${STARS_COUNT}`);
+  starsContainer.appendChild(star);
+}
+function renderStars(){
+  starsContainer.querySelectorAll('i').forEach((s,i)=>{
+    const a=i<userRating;s.classList.toggle('active',a);s.setAttribute('aria-checked',String(a));
+  });
+}
+function setRating(v){userRating=v;safeSet('moviez_rating',v);renderStars();toast('شكراً لك! تم حفظ تقييمك بنجاح ⭐');}
+starsContainer.addEventListener('click',e=>{const s=e.target.closest('i');if(s)setRating(+s.dataset.value);});
+starsContainer.addEventListener('keydown',e=>{
+  const s=e.target.closest('i');if(!s)return;
+  if(e.key==='Enter'||e.key===' '){e.preventDefault();setRating(+s.dataset.value);}
+});
+renderStars();
+window.addEventListener('resize',()=>{
+  if(document.getElementById('detailView').style.display!=='none')updateReadMoreVisibility();
+});
+function initRouteFromURL(){
+  const m=location.hash.match(/^#detail-(\d+)$/);
+  if(m){const idx=Number(m[1]);if(movies[idx]){history.replaceState({view:'detail',idx},'','#detail-'+idx);showDetail(movies[idx],idx,true);}}
+}
+renderMovies();
+initRouteFromURL();
+</script>
+
+</body>
+</html>
